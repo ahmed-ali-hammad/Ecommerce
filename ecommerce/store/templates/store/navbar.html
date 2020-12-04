@@ -1,0 +1,30 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  
+  <a class="navbar-brand" href="{% url 'store' %}">Ecommerce</a>
+
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'store' %}">Home</a>
+      </li>
+    </ul>
+
+    <div class="dropdown active form-inline my-2 my-lg-0 mr-4"> 
+        <a class=" btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" id="dropdown_list" href="#">Hello, sign in</a>
+
+        <div class="dropdown-menu" area-labelledby="dropdown_list">
+          <a class="dropdown-item"  href="{% url 'login' %}">Sign in</a>
+          <a class="dropdown-item"  href="{% url 'register' %}">Need an account? Sign up</a>
+        </div>
+    </div>
+
+    <div class="form-inline my-2 my-lg-0 mr-2">
+      <a href="{% url 'cart' %}">
+        <img class ="cart-icon" src="{% static 'images/cart.png' %}">
+        </a>
+        <p id="cart-total">{{ total_quantity }}</p>
+    </div>
+
+
+</nav>
