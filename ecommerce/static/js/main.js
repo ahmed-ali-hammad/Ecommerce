@@ -17,6 +17,39 @@ function updateUserOrder(productId, action){
 
 };	
 
+function addCookieItem (productId, action){
+	console.log("user is not authenticated...")
+
+
+	if(action == "add"){
+		if(cart[productId] == undefined){
+			cart[productId] = {"quantity": 1}
+		}
+		else{
+			cart[productId]["quantity"] +=1
+		}
+		
+	}
+	else{
+		cart[productId]["quantity"] -=1
+		if(cart[productId]["quantity"] <= 0){
+			delete cart[productId]
+		}
+	}
+
+	var totalQuantity = 0
+
+	var cartValues = Object.values(cart)
+
+	for (var i=0; i < cartValues.length; i++){
+		totalQuantity += cartValues[i]['quantity'] 
+	}
+
+	document.getElementById("cart-total").innerHTML = totalQuantity
+
+	document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+}
+
 for(var i=0 ; i < addCart.length ; i++) {
 
 	addCart[i].addEventListener("click", function(){
@@ -25,13 +58,15 @@ for(var i=0 ; i < addCart.length ; i++) {
 			
 
 			if(user == "AnonymousUser"){
-				console.log('user is not authenticated')}
+				addCookieItem(productId, action)}
+
 			else {
 				updateUserOrder(productId, action)
 			};
 		});
 
 }
+
 
 
 var cartQuantity = document.getElementsByClassName("quantity");
@@ -41,6 +76,6 @@ for(var i=0 ; i < cartQuantity.length ; i++) {
 	cartQuantity[i].addEventListener("click", function(i) {
 
   		document.location.reload(true)})
-
-
 }
+
+

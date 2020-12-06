@@ -10,7 +10,8 @@
       </li>
     </ul>
 
-    <div class="dropdown active form-inline my-2 my-lg-0 mr-4"> 
+    <a id="sign-out" class = "btn btn-outline-dark form-inline my-2 my-lg-0 mr-2"  href="{% url 'logout' %}">Sign out</a>
+    <div id="sign-in" class="dropdown active form-inline my-2 my-lg-0 mr-4"> 
         <a class=" btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" id="dropdown_list" href="#">Hello, sign in</a>
 
         <div class="dropdown-menu" area-labelledby="dropdown_list">
@@ -26,5 +27,15 @@
         <p id="cart-total">{{ total_quantity }}</p>
     </div>
 
+
+    <script type="text/javascript">
+      if(user != 'AnonymousUser'){
+        document.getElementById('sign-in').classList.add("d-none")
+      }
+
+      if(user == 'AnonymousUser'){
+        document.getElementById('sign-out').classList.add("d-none")
+      }
+    </script>
 
 </nav>

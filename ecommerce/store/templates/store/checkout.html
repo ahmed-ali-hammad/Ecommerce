@@ -13,13 +13,14 @@
 	<div class="col-lg-6">
 		<div class="box-element" id="name-address">
 			<form id="form">
+					{% csrf_token %}
 				<div id="user-info">
 					<div class="form-field">
-						<input class="form-control" type="text" name="Name" placeholder="Name..."></input>
+						<input class="form-control" type="text" name="name" placeholder="Name..."></input>
 					</div>
 					
 					<div class="form-field">
-						<input class="form-control" type="text" name="Email..." placeholder="Email..."></input>
+						<input class="form-control" type="text" name="email" placeholder="Email..."></input>
 					</div>
 				</div>
 
@@ -106,6 +107,7 @@ if(user != "AnonymousUser" && '{{shipping}}' == 'False' ){
 
 
 var form = document.getElementById("form")
+//csrftoken = form.getElementsByTagName("input")[0].value
 
 form.addEventListener("submit", function(e){
 	e.preventDefault()
@@ -166,6 +168,8 @@ function submitFormData(){
 		.then(data => {
 			console.log('sucess:', data);
 			alert('transaction complete');
+			cart = {}
+            document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"		
 			window.location.href = "{% url 'store' %}";
 			})
 
