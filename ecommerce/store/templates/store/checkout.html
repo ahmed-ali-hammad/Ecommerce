@@ -55,7 +55,8 @@
 		<br>
 
 		<div class="box-element d-none" id="payment-info">
-			<button class="btn btn-secondary btn-block" id="make-payment">Make Payment</button>
+			 <div id="paypal-button-container"></div>
+			<!--<button class="btn btn-secondary btn-block" id="make-payment">Make Payment</button>-->
 		</div>
 	</div>
 
@@ -90,6 +91,37 @@
 	</div>
 </div>
 
+<script src="https://www.paypal.com/sdk/js?client-id=AY3YdhME7eB5aoI4cOJqL4cfdJkDH7ldjDBv0ZVDDnXOf7k0_MdqvcK9beYdahdnylKt5UT8Id_RlulO&currency=USD"></script>
+
+<script>
+	var tatal = '{{ total_price }}'
+    // Render the PayPal button into #paypal-button-container
+    paypal.Buttons({
+
+        // Set up the transaction
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: tatal
+                    }
+                }]
+            });
+        },
+
+        // Finalize the transaction
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+            	submitFormData()
+                // Show a success message to the buyer
+                //alert('Transaction completed by ' + details.payer.name.given_name + '!');
+            });
+        }
+
+
+    }).render('#paypal-button-container');
+</script>
+
 <script type="text/javascript">
 
 if('{{shipping}}' == 'False'){
@@ -102,7 +134,7 @@ if(user != "AnonymousUser"){
 
 if(user != "AnonymousUser" && '{{shipping}}' == 'False' ){
 	document.getElementById("name-address").classList.add("d-none")	
-	document.getElementById('payment-info').classList.remove("d-none")
+	//document.getElementById('payment-info').classList.remove("d-none")
 }
 
 
@@ -117,9 +149,9 @@ form.addEventListener("submit", function(e){
 
 	})
 
-document.getElementById('make-payment').addEventListener("click",function () {
+/*document.getElementById('make-payment').addEventListener("click",function () {
 	submitFormData()
-	})
+	})*/
 
 function submitFormData(){
 	console.log("data is submitted")
